@@ -1,6 +1,7 @@
 import os
 import random
 
+
 def boardOutput(game_board):
     os.system("clear")
     print('\n-------------------')
@@ -37,7 +38,6 @@ def selectPlayerControl():
             symbol = "X"
         elif player_input == "o" or player_input == "O":
             symbol = "O"
-    
     return symbol
 
 
@@ -91,12 +91,12 @@ def play_again(play):
         return True
     else:
         return False
-        
+
 
 def main():
     work_time = True
     while work_time:
-    
+
         player_control = ["", ""]
 
         player_control[random.randint(0, 1)] = selectPlayerControl()
@@ -104,7 +104,10 @@ def main():
             player_control[1] = "O"
         elif player_control[1] == "X":
             player_control[0] = "O"
-            
+        elif player_control[1] == "O":
+            player_control[0] = "X"
+        elif player_control[1] == "O":
+            player_control[0] = "X"
         print("\nPlayer1= " + player_control[0], "\nPlayer2= " + player_control[1])
 
         board = [" "] * 9
@@ -139,10 +142,11 @@ def main():
                 print("Winner is the player with symbol: " + str(player_control[player]) + ("\n" * 4))
                 break
 
-        if play_again(work_time) == True:
+        if play_again(work_time) is True:
             work_time = True
         else:
             work_time = False
             break
+
 
 main()
