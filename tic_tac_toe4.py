@@ -1,5 +1,5 @@
 import os
-
+import random
 
 def boardOutput(game_board):
     os.system("clear")
@@ -31,8 +31,13 @@ def isSpaceEmpty(game_board, position):
 
 def selectPlayerControl():
     symbol = ""
-    while symbol != "X" and symbol != "O":
-        symbol = input("\nEnter 'X' or 'O': ")
+    while symbol != "X" and symbol != "O" and symbol != "x" and symbol != "o":
+        player_input = input("\nEnter 'X' or 'O': ")
+        if player_input == "x" or player_input == "X":
+            symbol = "X"
+        elif player_input == "o" or player_input == "O":
+            symbol = "O"
+    
     return symbol
 
 
@@ -80,16 +85,19 @@ def isThereAWinner(gameBoard):
         return True
 
 
+
+
+
 def main():
     player_control = ["", ""]
 
-    player_control[0] = selectPlayerControl()
+    player_control[random.randint(0, 1)] = selectPlayerControl()
     if player_control[0] == "X":
         player_control[1] = "O"
-    else:
-        player_control[1] = "X"
-
-    print("\nPlayer1= " + player_control[0],"\nPlayer2= " + player_control[1])
+    elif player_control[1] == "X":
+        player_control[0] = "O"
+        
+    print("\nPlayer1= " + player_control[0], "\nPlayer2= " + player_control[1])
 
     board = [" "] * 9
 
