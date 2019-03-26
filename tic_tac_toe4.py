@@ -85,61 +85,64 @@ def isThereAWinner(gameBoard):
         return True
 
 
-
-
+def play_again(play):
+    answer = input("Would you like to play an other one?(y/n):")
+    if answer == "y" or answer == "Y":
+        return True
+    else:
+        return False
+        
 
 def main():
-    player_control = ["", ""]
+    work_time = True
+    while work_time:
+    
+        player_control = ["", ""]
 
-    player_control[random.randint(0, 1)] = selectPlayerControl()
-    if player_control[0] == "X":
-        player_control[1] = "O"
-    elif player_control[1] == "X":
-        player_control[0] = "O"
-        
-    print("\nPlayer1= " + player_control[0], "\nPlayer2= " + player_control[1])
+        player_control[random.randint(0, 1)] = selectPlayerControl()
+        if player_control[0] == "X":
+            player_control[1] = "O"
+        elif player_control[1] == "X":
+            player_control[0] = "O"
+            
+        print("\nPlayer1= " + player_control[0], "\nPlayer2= " + player_control[1])
 
-    board = [" "] * 9
+        board = [" "] * 9
 
-    boardOutput(board)
+        boardOutput(board)
 
-    player = 0
-    while True:
-        move = int(input("\nPlayer" + str(player + 1) + "! Place \"" + player_control[player] + "\" to grid: ")) - 1
-        if isSpaceEmpty(board, move): 
-            board[move] = player_control[player]
-            boardOutput(board)
-            if player == 0:
-                player = 1
+        player = 0
+        while True:
+            move = int(input("\nPlayer" + str(player + 1) + "! Place \"" + player_control[player] + "\" to grid: ")) - 1
+            if isSpaceEmpty(board, move):
+                board[move] = player_control[player]
+                boardOutput(board)
+                if player == 0:
+                    player = 1
+                else:
+                    player = 0
+
+                boardOutput(board)
+
             else:
-                player = 0
+                print("Space " + str(move + 1) + " is occupied!\n")
 
-            boardOutput(board)
-
-        else:
-            print("Space " + str(move +1) + " is occupied!\n")
-
-        if (isTableFull(board)) and (not(isThereAWinner(board))):
-            print("It's a tie")
-            answer = input("Would you like to play an other one?(y/n):")
-            if answer == "y" or answer == "Y":
-                main()
-                break
-            else:
+            if (isTableFull(board)) and (not(isThereAWinner(board))):
+                print("It's a tie")
                 break    
 
-        if isThereAWinner(board):
-            if player == 0:
-                player = 1
-            else:
-                player = 0
-            print("Winner is the player with symbol: " + str(player_control[player]) + ("\n" *4))
-            answer2 = input("Would you like to play an other one? (y/n): ")
-            if answer2 == "y" or answer2 == "Y":
-                main()
-                break
-            else:
+            if isThereAWinner(board):
+                if player == 0:
+                    player = 1
+                else:
+                    player = 0
+                print("Winner is the player with symbol: " + str(player_control[player]) + ("\n" * 4))
                 break
 
+        if play_again(work_time) == True:
+            work_time = True
+        else:
+            work_time = False
+            break
 
 main()
