@@ -20,11 +20,14 @@ def boardOutput(game_board):
 
 
 def playAgain():
-    if isThereAWinner or isTableFull == True:
-        user_input = input("Play again? (yes or no): ")
-        if user_input == "yes":
-            return True
-
+    if isThereAWinner or isTableFull is True:
+        user_input = ""
+        while user_input != "y" and user_input != "yes" and user_input != "n" and user_input != "no":
+            user_input = input("Play again? (yes or no): ")
+            if user_input == "yes":
+                return True
+            else:
+                return False
 
 def isSpaceEmpty(game_board, position):
     return (game_board[position] != "X") and (game_board[position] != "O")
@@ -94,6 +97,7 @@ def play_again(play):
 
 
 def main():
+    board = [" "] * 9
     work_time = True
     while work_time:
 
@@ -110,13 +114,15 @@ def main():
             player_control[0] = "X"
         print("\nPlayer1= " + player_control[0], "\nPlayer2= " + player_control[1])
 
-        board = [" "] * 9
-
         boardOutput(board)
 
         player = 0
         while True:
-            move = int(input("\nPlayer" + str(player + 1) + "! Place \"" + player_control[player] + "\" to grid: ")) - 1
+            move = -1
+            while (move < 0 or move > 8):
+                move = int(input("\nPlayer" + str(player + 1) + "! Place \"" + player_control[player] + "\" to grid: ")) - 1
+
+
             if isSpaceEmpty(board, move):
                 board[move] = player_control[player]
                 boardOutput(board)
@@ -125,7 +131,7 @@ def main():
                 else:
                     player = 0
 
-                boardOutput(board)
+                    boardOutput(board)
 
             else:
                 print("Space " + str(move + 1) + " is occupied!\n")
@@ -143,6 +149,7 @@ def main():
                 break
 
         if play_again(work_time) is True:
+            board = [" "] * 9
             work_time = True
         else:
             work_time = False
