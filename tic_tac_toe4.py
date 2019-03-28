@@ -70,42 +70,66 @@ def isTableFull(game_board, size):
 
 
 
-'''def isThereAWinner(gameBoard):
-    winner = False
-    if gameBoard[0] == "X" and gameBoard[1] == "X" and gameBoard[2] == "X":
-        return True
-    if gameBoard[3] == "X" and gameBoard[4] == "X" and gameBoard[5] == "X":
-        return True
-    if gameBoard[6] == "X" and gameBoard[7] == "X" and gameBoard[8] == "X":
-        return True
-    if gameBoard[0] == "X" and gameBoard[3] == "X" and gameBoard[6] == "X":
-        return True
-    if gameBoard[1] == "X" and gameBoard[4] == "X" and gameBoard[7] == "X":
-        return True
-    if gameBoard[2] == "X" and gameBoard[5] == "X" and gameBoard[8] == "X":
-        return True
-    if gameBoard[0] == "X" and gameBoard[4] == "X" and gameBoard[8] == "X":
-        return True
-    if gameBoard[2] == "X" and gameBoard[4] == "X" and gameBoard[6] == "X":
-        return True
 
-    if gameBoard[0] == "O" and gameBoard[1] == "O" and gameBoard[2] == "O":
-        return True
-    if gameBoard[3] == "O" and gameBoard[4] == "O" and gameBoard[5] == "O":
-        return True
-    if gameBoard[6] == "O" and gameBoard[7] == "O" and gameBoard[8] == "O":
-        return True
-    if gameBoard[0] == "O" and gameBoard[3] == "O" and gameBoard[6] == "O":
-        return True
-    if gameBoard[1] == "O" and gameBoard[4] == "O" and gameBoard[7] == "O":
-        return True
-    if gameBoard[2] == "O" and gameBoard[5] == "O" and gameBoard[8] == "O":
-        return True
-    if gameBoard[0] == "O" and gameBoard[4] == "O" and gameBoard[8] == "O":
-        return True
-    if gameBoard[2] == "O" and gameBoard[4] == "O" and gameBoard[6] == "O":
-        return True'''
+def is_there_a_winner_with_x(board):
 
+    board_height = len(board)
+    board_width = len(board[0])
+
+    #check horizontal
+    for y in range(board_height):
+        for x in range(board_width - 4):
+            if board[x][y] == "X" and board[x+1][y] == "X" and board[x+2][y] == "X" and board[x+3][y] == "X" and board[x+4][y] == "X":
+                return True
+
+    # check vertical spaces
+    for x in range(board_width):
+        for y in range(board_height - 4):
+            if board[x][y] == "X" and board[x][y+1] == "X" and board[x][y+2] == "X" and board[x][y+3] == "X" and board[x][y+4] == "X":
+                return True
+
+    # check / diagonal spaces
+    for x in range(board_width - 4):
+        for y in range(4, board_height):
+            if board[x][y] == "X" and board[x+1][y-1] == "X" and board[x+2][y-2] == "X" and board[x+3][y-3] == "X" and board[x+4][y-4] == "X":
+                return True
+
+    # check \ diagonal spaces
+    for x in range(board_width - 4):
+        for y in range(board_height - 4):
+            if board[x][y] == "X" and board[x+1][y+1] == "X" and board[x+2][y+2] == "X" and board[x+3][y+3] == "X" and board[x+3][y+3] == "X":
+                return True
+    return False
+
+
+def is_there_a_winner_with_o(board):
+
+    board_height = len(board)
+    board_width = len(board[0])
+    #check horizontal
+    for y in range(board_height):
+        for x in range(board_width - 4):
+            if board[x][y] == "O" and board[x+1][y] == "O" and board[x+2][y] == "O" and board[x+3][y] == "O" and board[x+4][y] == "O":
+                return True
+
+    # check vertical spaces
+    for x in range(board_width):
+        for y in range(board_height - 4):
+            if board[x][y] == "O" and board[x][y+1] == "O" and board[x][y+2] == "O" and board[x][y+3] == "O" and board[x][y+4] == "O":
+                return True
+
+     # check / diagonal spaces
+    for x in range(board_width - 4):
+        for y in range(4, board_height):
+            if board[x][y] == "O" and board[x+1][y-1] == "O" and board[x+2][y-2] == "O" and board[x+3][y-3] == "O" and board[x+4][y-4] == "O":
+                return True
+
+    # check \ diagonal spaces
+    for x in range(board_width - 4):
+        for y in range(board_height - 4):
+            if board[x][y] == "O" and board[x+1][y+1] == "O" and board[x+2][y+2] == "O" and board[x+3][y+3] == "O" and board[x+3][y+3] == "O":
+                return True
+    return False
 
 def play_again(play):
     answer = input("Would you like to play an other one?(y/n):")
@@ -163,6 +187,13 @@ def main():
                     player = 0
                 print("Winner is the player with symbol: " + str(player_control[player]) + ("\n" * 4))
                 break'''
+            if is_there_a_winner_with_x(current_board) == True and is_there_a_winner_with_o(current_board) == False:
+                print("The player with X is the Winner!")
+                break
+
+            if is_there_a_winner_with_x(current_board) == False and is_there_a_winner_with_o(current_board) == True:
+                print("The player with O is the Winner!")
+                break
 
         if play_again(work_time) is True:
             work_time = True
