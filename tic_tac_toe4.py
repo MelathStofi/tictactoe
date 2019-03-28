@@ -60,10 +60,14 @@ def selectPlayerControl():
 
 
 def isTableFull(game_board, size):
-    if game_board.count("X") + game_board.count("O") == (size * size):
+    ls = []
+    for col in range(len(game_board)):
+        for row in range(len(game_board)):
+            if game_board[col][row] == "X" or game_board[col][row] == "O":
+                ls.append("kakk")
+    if ls.count("kakk") == size * size:
         return True
-    else:
-        return False
+
 
 
 '''def isThereAWinner(gameBoard):
@@ -149,9 +153,8 @@ def main():
                 print("Space " + str(move) + " is occupied!\n")
 
             if (isTableFull(current_board, board_size)):
-                '''and (not(isThereAWinner(current_board)))'''
                 print("It's a tie")
-                break    
+                break
 
             '''if isThereAWinner(current_board):
                 if player == 0:
