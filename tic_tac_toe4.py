@@ -1,10 +1,23 @@
 import os
 import random
+import time
 
 
 def select_board_size():
-    board_size = int(input("What is your requested board size?: "))
-    return board_size
+    while True:
+        try:
+            board_size = int(input("What is your requested board size?: "))
+            if board_size < 5 or board_size > 15:
+                print("Board size must be between 5 and 15")
+                time.sleep(1.5)
+                os.system("clear")
+                continue
+            else:
+                return board_size
+        except ValueError:
+            print("Invalid board size!")
+            time.sleep(1)
+            os.system("clear")
 
 
 def initialise_board(board_size):
@@ -33,22 +46,11 @@ def request_player_input(plyr, plyr_ctrl):
     return cords
 
 
-def playAgain():
-    if isThereAWinner or isTableFull is True:
-        user_input = ""
-        while user_input != "y" and user_input != "yes" and user_input != "n" and user_input != "no":
-            user_input = input("Play again? (yes or no): ")
-            if user_input == "yes":
-                return True
-            else:
-                return False
-
-
-def isSpaceEmpty(game_board, coordinates):
+def is_space_empty(game_board, coordinates):
     return (game_board[int(coordinates[0]) - 1][int(coordinates[1]) - 1] != "X") and (game_board[int(coordinates[0]) - 1][int(coordinates[1]) - 1] != "O")
 
 
-def selectPlayerControl():
+def select_player_control():
     symbol = ""
     while symbol != "X" and symbol != "O" and symbol != "x" and symbol != "o":
         player_input = input("\nEnter 'X' or 'O': ")
@@ -59,7 +61,7 @@ def selectPlayerControl():
     return symbol
 
 
-def isTableFull(game_board, size):
+def is_table_full(game_board, size):
     ls = []
     for col in range(len(game_board)):
         for row in range(len(game_board)):
@@ -67,8 +69,6 @@ def isTableFull(game_board, size):
                 ls.append("kakk")
     if ls.count("kakk") == size * size:
         return True
-
-
 
 
 def is_there_a_winner_with_x(board):
@@ -118,7 +118,7 @@ def is_there_a_winner_with_o(board):
             if board[x][y] == "O" and board[x][y+1] == "O" and board[x][y+2] == "O" and board[x][y+3] == "O" and board[x][y+4] == "O":
                 return True
 
-     # check / diagonal spaces
+    # check / diagonal spaces
     for x in range(board_width - 4):
         for y in range(4, board_height):
             if board[x][y] == "O" and board[x+1][y-1] == "O" and board[x+2][y-2] == "O" and board[x+3][y-3] == "O" and board[x+4][y-4] == "O":
@@ -131,12 +131,15 @@ def is_there_a_winner_with_o(board):
                 return True
     return False
 
+
 def play_again(play):
-    answer = input("Would you like to play an other one?(y/n):")
-    if answer == "y" or answer == "Y":
-        return True
-    else:
-        return False
+    user_input = ""
+    while user_input != "y" and user_input != "yes" and user_input != "n" and user_input != "no":
+        user_input = input("Play again? (yes or no): ")
+        if user_input == "yes":
+            return True
+        else:
+            return False
 
 
 def main():
@@ -147,7 +150,7 @@ def main():
         current_board = initialise_board(board_size)
 
         player_control = ["", ""]
-        player_control[random.randint(0, 1)] = selectPlayerControl()
+        player_control[random.randint(0, 1)] = select_player_control()
         if player_control[0] == "X":
             player_control[1] = "O"
         elif player_control[1] == "X":
@@ -163,7 +166,7 @@ def main():
         while True:
             move = request_player_input(player, player_control)
 
-            if isSpaceEmpty(current_board, move):
+            if is_space_empty(current_board, move):
                 current_board[int(move[0]) - 1][int(move[1]) - 1] = player_control[player]
                 board_output(current_board, board_size)
                 if player == 0:
@@ -176,17 +179,10 @@ def main():
             else:
                 print("Space " + str(move) + " is occupied!\n")
 
-            if (isTableFull(current_board, board_size)):
+            if (is_table_full(current_board, board_size)):
                 print("It's a tie")
                 break
 
-            '''if isThereAWinner(current_board):
-                if player == 0:
-                    player = 1
-                else:
-                    player = 0
-                print("Winner is the player with symbol: " + str(player_control[player]) + ("\n" * 4))
-                break'''
             if is_there_a_winner_with_x(current_board) == True and is_there_a_winner_with_o(current_board) == False:
                 print("The player with X is the Winner!")
                 break
