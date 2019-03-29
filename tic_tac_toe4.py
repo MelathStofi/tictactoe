@@ -45,7 +45,7 @@ def board_output(game_board, size):
 
 
 def request_player_input(plyr, plyr_ctrl):
-    play_input = input("\nPlayer" + str(plyr + 1) + "! Place \"" + plyr_ctrl[plyr] + "\" to grid (x y): ")
+    play_input = input("\nPlayer" + str(plyr + 1) + "! Place \"" + plyr_ctrl[plyr] + "\" to grid (y x): ")
     cords = list(play_input.split())
     return cords
 
