@@ -32,12 +32,16 @@ def board_output(game_board, size):
     dash = '------'
     blank_bar = "     |"
 
+    print("    " + '     '.join(str(i+1) for i in range(size)) + '   ')
+    numerator = 1
     for row in game_board:
-        print("-" + dash * size)
-        print("|" + blank_bar * size)
-        print("|  " + '  |  '.join(str(elem) for elem in row) + '  |')
-        print("|" + blank_bar * size)
-    print("-" + dash * size)
+        print(" -" + dash * size)
+        print(" |" + blank_bar * size)
+        print(str(numerator) + "|  " + '  |  '.join(str(elem) for elem in row) + '  |' + str(numerator))
+        print(" |" + blank_bar * size)
+        numerator += 1
+    print(" -" + dash * size)
+    print("    " + '     '.join(str(i+1) for i in range(size)) + '   ')
 
 
 def request_player_input(plyr, plyr_ctrl):
@@ -58,6 +62,7 @@ def select_player_control():
             symbol = "X"
         elif player_input == "o" or player_input == "O":
             symbol = "O"
+        os.system("clear")
     return symbol
 
 
@@ -143,6 +148,7 @@ def play_again(play):
 
 
 def main():
+    os.system("clear")
     work_time = True
     while work_time:
 
@@ -160,8 +166,10 @@ def main():
         elif player_control[1] == "O":
             player_control[0] = "X"
         print("\nPlayer1= " + player_control[0], "\nPlayer2= " + player_control[1])
+        time.sleep(3)
 
         board_output(current_board, board_size)
+
         player = 0
         while True:
             move = request_player_input(player, player_control)
